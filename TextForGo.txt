@@ -1,0 +1,8 @@
+this is a txt file for go
+what it will allow me to do 
+is read a file line by line
+and then split the words 
+and put them into an array 
+of all the words. the delimiter
+is obviously going to be the
+space key ;) 
