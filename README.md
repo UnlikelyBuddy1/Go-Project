@@ -15,10 +15,10 @@
   - Creates the two matrixes from those Strings (Tricky i think)
   
 - ### Learn and make a Communication handeler with TCP that will receive Strings from a client
- - create a the Server's **Machine a Etat**
- - then creat script that runs that machine
+  - create a the Server's **Machine a Etat**
+  - then creat script that runs that machine
  
 - ### Create Client that sends **valid** instructions to the server
- - maybe GUI, no idea
+  - maybe GUI, no idea
   
   # 
