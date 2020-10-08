@@ -1,3 +1,4 @@
+[![GitHub All Releases](https://img.shields.io/github/repo-size/UnlikelyBuddy1/Go-Project.svg?color=%23FFAB40&style=for-the-badge)](https://github.com/UnlikelyBuddy1/Go-Project) 
 # *Go-Project*
 3TC2 Go project ***Adri, Elisa et Jeanne :)***
 
