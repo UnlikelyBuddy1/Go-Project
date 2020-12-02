@@ -15,7 +15,7 @@ import (
 
 //Adresses
 const (
-	IP   = "192.168.1.47" // IP local
+	IP   = "192.168.1.46" // IP local
 	PORT = "3569"         // Port utilisé
 )
 
@@ -70,7 +70,7 @@ func read(conn net.Conn) {
 		//fmt.Println(floatMatrixA)
 		//fmt.Println(floatMatrixB)
 		start := time.Now()
-		floatMatrixC := routinesHandeler(floatMatrixA, floatMatrixB, 1)
+		floatMatrixC := routinesHandeler(floatMatrixA, floatMatrixB, 2)
 		end := time.Since(start)
 		fmt.Println("elapsed", end)
 		bytesMatrixC := FloatMatrixToBytes(floatMatrixC)
@@ -208,8 +208,9 @@ func routinesHandeler(matrixA [][]float64, matrixB [][]float64, cpuCount int) []
 		start = start + step
 
 	}
+	sc.Add(1)
+	go LBL(start, start+step+rest, aColumns, bColumns, matrixA, matrixB, &sc, chanPool[cpuCount-1])
 	fmt.Println(start, start+step+rest)
-	go LBL(start, start+step+rest, aColumns, bColumns, matrixA, matrixB, &sc, chanPool[cpuCount])
 	sc.Wait()
 	matrix := [][]float64{}
 	for i := 0; i < len(chanPool); i++ {
