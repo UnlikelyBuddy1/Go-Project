@@ -10,6 +10,7 @@ import (
 	"strconv"
 	"strings"
 	"sync"
+	"time"
 )
 
 //Adresses
@@ -66,11 +67,14 @@ func read(conn net.Conn) {
 		read, err = io.ReadFull(stream, buffer)
 		byteMatrixB := byteSliceToByteMatrix(types, rowB, columnB, buffer)
 		floatMatrixB := byteMatrixToFloatMatrix(byteMatrixB, rowB, columnB)
-		fmt.Println(floatMatrixA)
-		fmt.Println(floatMatrixB)
+		//fmt.Println(floatMatrixA)
+		//fmt.Println(floatMatrixB)
+		start := time.Now()
 		floatMatrixC := routinesHandeler(floatMatrixA, floatMatrixB, 1)
+		end := time.Since(start)
+		fmt.Println("elapsed", end)
 		bytesMatrixC := FloatMatrixToBytes(floatMatrixC)
-		fmt.Println(floatMatrixC)
+		//fmt.Println(floatMatrixC)
 		rowC := len(floatMatrixC)
 		columnC := len(floatMatrixC[0])
 		ClientHeader := makeHeader("2", rowC, columnC) // MAKE PROPER HEADER FOR CLIENT
@@ -190,17 +194,22 @@ func routinesHandeler(matrixA [][]float64, matrixB [][]float64, cpuCount int) []
 	start := 0
 	end := len(matrixA)
 	step := end / cpuCount
+	rest := end % cpuCount
 	aColumns := len(matrixA[0])
 	bColumns := len(matrixB[0])
 	chanPool := make([]chan [][]float64, cpuCount)
 	for i := 0; i < len(chanPool); i++ {
 		chanPool[i] = make(chan [][]float64, 1)
 	}
-	for routines := 0; routines < cpuCount; routines++ {
+	for routines := 0; routines < cpuCount-1; routines++ {
 		sc.Add(1)
+		fmt.Println(start, start+step)
 		go LBL(start, start+step, aColumns, bColumns, matrixA, matrixB, &sc, chanPool[routines])
 		start = start + step
+
 	}
+	fmt.Println(start, start+step+rest)
+	go LBL(start, start+step+rest, aColumns, bColumns, matrixA, matrixB, &sc, chanPool[cpuCount])
 	sc.Wait()
 	matrix := [][]float64{}
 	for i := 0; i < len(chanPool); i++ {
@@ -208,11 +217,3 @@ func routinesHandeler(matrixA [][]float64, matrixB [][]float64, cpuCount int) []
 	}
 	return matrix
 }
-
-/*
-matrixA := [][]float64{}
-		matrixB := [][]float64{}
-		rows, err := strconv.Atoi(header[1])
-		for i := 0; i < rows; i++ {
-
-		}*/

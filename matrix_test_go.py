@@ -1,6 +1,6 @@
 import numpy as np
 from numpy import savetxt
-size = 512
+size = 256
 matrixA = np.random.rand(size, size)
 matrixB = np.random.rand(size, size)
 matrixes = [matrixA, matrixB]

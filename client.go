@@ -24,7 +24,6 @@ const (
 func main() {
 	// Connexion au serveur
 	clientHandler()
-
 }
 
 func clientHandler() {
