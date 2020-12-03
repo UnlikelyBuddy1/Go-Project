@@ -15,7 +15,7 @@ import (
 
 //Adresses
 const (
-	IP   = "192.168.1.46" // IP local
+	IP   = "127.0.0.1" // IP local
 	PORT = "3569"         // Port utilisé
 )
 
